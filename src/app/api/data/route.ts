@@ -1,10 +1,11 @@
 import { createClient } from '@supabase/supabase-js'
 import { NextRequest, NextResponse } from 'next/server'
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
+// Clean environment variables (remove newlines that may be added by Vercel)
+const supabaseUrl = (process.env.NEXT_PUBLIC_SUPABASE_URL || '').trim().replace(/\n/g, '')
+const supabaseKey = (process.env.SUPABASE_SERVICE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '').trim().replace(/\n/g, '')
+
+const supabase = createClient(supabaseUrl, supabaseKey)
 
 // API key for authentication
 const API_KEY = process.env.IMELIQ_API_KEY || 'imeliq-secret-key-2024'
