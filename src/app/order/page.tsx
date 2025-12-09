@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { supabase } from '@/lib/supabase'
 
 const PICKUP_LOCATIONS = {
   courier: 'Kuller (kohaletoimetamine)',
@@ -38,18 +37,29 @@ export default function OrderPage() {
     }
 
     try {
-      const { error: dbError } = await supabase.from('orders').insert([{
-        email: form.email,
-        quantity: form.quantity,
-        price_per_unit: pricePerUnit,
-        pickup_location: form.pickup_location,
-        status: 'pending'
-      }])
+      const response = await fetch('/api/order', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: form.email,
+          quantity: form.quantity,
+          price_per_unit: pricePerUnit,
+          pickup_location: form.pickup_location
+        })
+      })
 
-      if (dbError) throw dbError
+      const result = await response.json()
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Viga tellimuse salvestamisel')
+      }
+
       setSuccess(true)
     } catch (err) {
-      setError('Midagi läks valesti. Proovi uuesti.')
+      const errorMessage = err instanceof Error ? err.message : 'Midagi läks valesti. Proovi uuesti.'
+      setError(errorMessage)
       console.error(err)
     } finally {
       setLoading(false)
