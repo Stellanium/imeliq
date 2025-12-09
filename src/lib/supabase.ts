@@ -17,8 +17,13 @@ export function getSupabase(): SupabaseClient {
   return supabaseInstance
 }
 
-// Keep backwards compatibility - but this will now work properly
-export const supabase = typeof window !== 'undefined' ? getSupabase() : (null as unknown as SupabaseClient)
+// Backwards compatible getter - use getSupabase() instead for new code
+// This is a getter that creates the client on first access, not at module load time
+export const supabase = new Proxy({} as SupabaseClient, {
+  get(_, prop) {
+    return getSupabase()[prop as keyof SupabaseClient]
+  }
+})
 
 export type Tester = {
   id: string
