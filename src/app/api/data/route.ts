@@ -110,11 +110,27 @@ export async function GET(request: NextRequest) {
       timestamp: new Date().toISOString()
     })
 
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('API Error:', error)
-    const errorMessage = error instanceof Error ? error.message : JSON.stringify(error)
+    // Handle Supabase PostgrestError and regular errors
+    let errorMessage: string
+    if (error && typeof error === 'object' && 'message' in error) {
+      errorMessage = (error as { message: string }).message
+    } else if (error && typeof error === 'object') {
+      errorMessage = JSON.stringify(error)
+    } else {
+      errorMessage = String(error)
+    }
     return NextResponse.json(
-      { error: 'Database error', details: errorMessage },
+      {
+        error: 'Database error',
+        details: errorMessage,
+        env_check: {
+          has_url: !!process.env.NEXT_PUBLIC_SUPABASE_URL,
+          has_service_key: !!process.env.SUPABASE_SERVICE_KEY,
+          has_anon_key: !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+        }
+      },
       { status: 500 }
     )
   }
