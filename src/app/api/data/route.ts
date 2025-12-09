@@ -112,8 +112,9 @@ export async function GET(request: NextRequest) {
 
   } catch (error) {
     console.error('API Error:', error)
+    const errorMessage = error instanceof Error ? error.message : JSON.stringify(error)
     return NextResponse.json(
-      { error: 'Database error', details: String(error) },
+      { error: 'Database error', details: errorMessage },
       { status: 500 }
     )
   }
