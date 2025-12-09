@@ -1,21 +1,34 @@
-import { createClient } from '@supabase/supabase-js'
+import { createClient, SupabaseClient } from '@supabase/supabase-js'
 import { NextRequest, NextResponse } from 'next/server'
 
-// Clean environment variables (remove newlines that may be added by Vercel)
-const supabaseUrl = (process.env.NEXT_PUBLIC_SUPABASE_URL || '').trim().replace(/\n/g, '')
-const supabaseKey = (process.env.SUPABASE_SERVICE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '').trim().replace(/\n/g, '')
+// Lazy-init supabase client to avoid build-time errors
+let supabase: SupabaseClient | null = null
 
-const supabase = createClient(supabaseUrl, supabaseKey)
+function getSupabase(): SupabaseClient {
+  if (!supabase) {
+    const supabaseUrl = (process.env.NEXT_PUBLIC_SUPABASE_URL || '').trim().replace(/\n/g, '')
+    const supabaseKey = (process.env.SUPABASE_SERVICE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '').trim().replace(/\n/g, '')
 
-// API key for authentication
-const API_KEY = process.env.IMELIQ_API_KEY || 'imeliq-secret-key-2024'
+    if (!supabaseUrl || !supabaseKey) {
+      throw new Error('Missing Supabase environment variables')
+    }
+
+    supabase = createClient(supabaseUrl, supabaseKey)
+  }
+  return supabase
+}
+
+// API key for authentication (lazy eval)
+function getApiKey(): string {
+  return process.env.IMELIQ_API_KEY || 'imeliq-secret-key-2024'
+}
 
 function checkAuth(request: NextRequest): boolean {
   const authHeader = request.headers.get('authorization')
   if (!authHeader) return false
 
   const token = authHeader.replace('Bearer ', '')
-  return token === API_KEY
+  return token === getApiKey()
 }
 
 // POST - register new tester (public endpoint)
@@ -35,7 +48,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Insert tester
-    const { data, error } = await supabase
+    const { data, error } = await getSupabase()
       .from('testers')
       .insert([{
         name,
@@ -86,7 +99,7 @@ export async function GET(request: NextRequest) {
 
     // Fetch requested data
     if (type === 'all' || type === 'feedback') {
-      const { data: feedback, error } = await supabase
+      const { data: feedback, error } = await getSupabase()
         .from('feedback')
         .select('*')
         .order('created_at', { ascending: false })
@@ -96,7 +109,7 @@ export async function GET(request: NextRequest) {
     }
 
     if (type === 'all' || type === 'orders') {
-      const { data: orders, error } = await supabase
+      const { data: orders, error } = await getSupabase()
         .from('orders')
         .select('*')
         .order('created_at', { ascending: false })
@@ -106,7 +119,7 @@ export async function GET(request: NextRequest) {
     }
 
     if (type === 'all' || type === 'testers') {
-      const { data: testers, error } = await supabase
+      const { data: testers, error } = await getSupabase()
         .from('testers')
         .select('*')
         .order('created_at', { ascending: false })
@@ -116,7 +129,7 @@ export async function GET(request: NextRequest) {
     }
 
     if (type === 'all' || type === 'stats') {
-      const { data: stats, error } = await supabase
+      const { data: stats, error } = await getSupabase()
         .from('feedback_stats')
         .select('*')
         .single()
