@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { supabase } from '@/lib/supabase'
 
 export default function RegisterPage() {
   const [form, setForm] = useState({
@@ -21,25 +20,38 @@ export default function RegisterPage() {
     setLoading(true)
     setError('')
 
-    if (!form.email) {
-      setError('Email on kohustuslik!')
+    if (!form.name || !form.email) {
+      setError('Nimi ja email on kohustuslikud!')
       setLoading(false)
       return
     }
 
     try {
-      const { error: dbError } = await supabase.from('testers').insert([{
-        name: form.name,
-        family_name: form.family_name || null,
-        email: form.email,
-        phone: form.phone || null,
-        marketing_consent: form.marketing_consent
-      }])
+      // Use server-side API instead of direct Supabase client
+      const response = await fetch('/api/data', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: form.name,
+          family_name: form.family_name || null,
+          email: form.email,
+          phone: form.phone || null,
+          marketing_consent: form.marketing_consent
+        })
+      })
 
-      if (dbError) throw dbError
+      const result = await response.json()
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Viga registreerimisel')
+      }
+
       setSuccess(true)
     } catch (err) {
-      setError('Midagi läks valesti. Proovi uuesti.')
+      const errorMessage = err instanceof Error ? err.message : 'Midagi läks valesti. Proovi uuesti.'
+      setError(errorMessage)
       console.error(err)
     } finally {
       setLoading(false)
