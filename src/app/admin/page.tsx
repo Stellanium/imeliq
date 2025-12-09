@@ -1,7 +1,39 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { supabase, Feedback, Order, Tester } from '@/lib/supabase'
+
+// Types from original supabase.ts
+type Feedback = {
+  id: string
+  created_at: string
+  product_code: string
+  referrer_name: string
+  feeling: 'energy' | 'nothing' | 'other'
+  comments?: string
+}
+
+type Order = {
+  id: string
+  created_at: string
+  email: string
+  quantity: number
+  price_per_unit: number
+  pickup_location: string
+  status: string
+}
+
+type Tester = {
+  id: string
+  created_at: string
+  name: string
+  family_name?: string
+  email: string
+  phone?: string
+  marketing_consent: boolean
+}
+
+// API key for authenticated requests
+const API_KEY = 'imeliq-secret-key-2024'
 
 type FeedbackStats = {
   total_feedback: number
@@ -99,43 +131,42 @@ export default function AdminPage() {
   const loadData = async () => {
     setLoading(true)
     try {
-      // Load stats
-      const { data: statsData } = await supabase
-        .from('feedback_stats')
-        .select('*')
-        .single()
-      if (statsData) setStats(statsData)
+      // Use API endpoint to fetch all data
+      const response = await fetch('/api/data?type=all', {
+        headers: {
+          'Authorization': `Bearer ${API_KEY}`,
+          'Content-Type': 'application/json'
+        }
+      })
 
-      // Load top referrers
-      const { data: referrersData } = await supabase
-        .from('top_referrers')
-        .select('*')
-      if (referrersData) setTopReferrers(referrersData)
-
-      // Load based on active tab
-      if (activeTab === 'feedback') {
-        const { data } = await supabase
-          .from('feedback')
-          .select('*')
-          .order('created_at', { ascending: false })
-        if (data) setFeedback(data)
+      if (!response.ok) {
+        throw new Error('Failed to fetch data')
       }
 
-      if (activeTab === 'orders') {
-        const { data } = await supabase
-          .from('orders')
-          .select('*')
-          .order('created_at', { ascending: false })
-        if (data) setOrders(data)
+      const result = await response.json()
+      const data = result.data
+
+      // Set stats (with defaults)
+      if (data.stats) {
+        setStats({
+          ...data.stats,
+          positive_percent: data.stats.total_feedback > 0
+            ? Math.round((data.stats.positive_count / data.stats.total_feedback) * 100)
+            : 0,
+          negative_percent: data.stats.total_feedback > 0
+            ? Math.round((data.stats.negative_count / data.stats.total_feedback) * 100)
+            : 0
+        })
       }
 
-      if (activeTab === 'testers') {
-        const { data } = await supabase
-          .from('testers')
-          .select('*')
-          .order('created_at', { ascending: false })
-        if (data) setTesters(data)
-      }
+      // Set feedback, orders, testers from API response
+      if (data.feedback) setFeedback(data.feedback)
+      if (data.orders) setOrders(data.orders)
+      if (data.testers) setTesters(data.testers)
+
+      // Top referrers are calculated from feedback (not in API yet)
+      setTopReferrers([])
+
     } catch (err) {
       console.error('Error loading data:', err)
     } finally {
@@ -144,10 +175,9 @@ export default function AdminPage() {
   }
 
   const updateOrderStatus = async (orderId: string, status: string) => {
-    await supabase
-      .from('orders')
-      .update({ status })
-      .eq('id', orderId)
+    // Note: Order status update needs separate API endpoint
+    // For now, just reload to show it doesn't persist without proper API
+    console.log('Order status update needs API endpoint:', orderId, status)
     loadData()
   }
 

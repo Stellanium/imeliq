@@ -18,6 +18,59 @@ function checkAuth(request: NextRequest): boolean {
   return token === API_KEY
 }
 
+// POST - register new tester (public endpoint)
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json()
+    const { name, family_name, email, phone, marketing_consent } = body
+
+    // Validate required fields
+    if (!name || !email) {
+      return NextResponse.json({ error: 'Nimi ja email on kohustuslikud' }, { status: 400 })
+    }
+
+    // Basic email validation
+    if (!email.includes('@')) {
+      return NextResponse.json({ error: 'Vigane emaili aadress' }, { status: 400 })
+    }
+
+    // Insert tester
+    const { data, error } = await supabase
+      .from('testers')
+      .insert([{
+        name,
+        family_name: family_name || null,
+        email,
+        phone: phone || null,
+        marketing_consent: marketing_consent || false
+      }])
+      .select()
+
+    if (error) {
+      console.error('Supabase error:', error)
+      // Check for unique constraint violation
+      if (error.code === '23505') {
+        return NextResponse.json({ error: 'See email on juba registreeritud' }, { status: 409 })
+      }
+      throw error
+    }
+
+    return NextResponse.json({
+      success: true,
+      message: 'Registreerimine õnnestus!',
+      data: data[0]
+    })
+
+  } catch (error: unknown) {
+    console.error('Registration error:', error)
+    let errorMessage = 'Viga registreerimisel'
+    if (error && typeof error === 'object' && 'message' in error) {
+      errorMessage = (error as { message: string }).message
+    }
+    return NextResponse.json({ error: errorMessage }, { status: 500 })
+  }
+}
+
 export async function GET(request: NextRequest) {
   // Check API key
   if (!checkAuth(request)) {
