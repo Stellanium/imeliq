@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { supabase } from '@/lib/supabase'
 
 export default function FeedbackPage() {
   const [form, setForm] = useState({
@@ -27,17 +26,29 @@ export default function FeedbackPage() {
     }
 
     try {
-      const { error: dbError } = await supabase.from('feedback').insert([{
-        product_code: form.product_code,
-        referrer_name: form.referrer_name,
-        feeling: form.feeling,
-        comments: form.comments || null
-      }])
+      const response = await fetch('/api/feedback', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          product_code: form.product_code,
+          referrer_name: form.referrer_name,
+          feeling: form.feeling,
+          comments: form.comments || null
+        })
+      })
 
-      if (dbError) throw dbError
+      const result = await response.json()
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Viga tagasiside salvestamisel')
+      }
+
       setSuccess(true)
     } catch (err) {
-      setError('Midagi läks valesti. Proovi uuesti.')
+      const errorMessage = err instanceof Error ? err.message : 'Midagi läks valesti. Proovi uuesti.'
+      setError(errorMessage)
       console.error(err)
     } finally {
       setLoading(false)
