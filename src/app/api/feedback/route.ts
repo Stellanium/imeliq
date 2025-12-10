@@ -38,6 +38,20 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Check if product_code already exists (unique constraint)
+    const { data: existing } = await getSupabase()
+      .from('feedback')
+      .select('id')
+      .eq('product_code', product_code)
+      .single()
+
+    if (existing) {
+      return NextResponse.json(
+        { error: 'See pudeli kood on juba kasutatud!' },
+        { status: 400 }
+      )
+    }
+
     // Insert feedback
     const { data, error } = await getSupabase()
       .from('feedback')
