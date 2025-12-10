@@ -6,7 +6,7 @@ let supabase: SupabaseClient | null = null
 function getSupabase(): SupabaseClient {
   if (!supabase) {
     const supabaseUrl = (process.env.NEXT_PUBLIC_SUPABASE_URL || '').trim().replace(/\n/g, '')
-    const supabaseKey = (process.env.SUPABASE_SERVICE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '').trim().replace(/\n/g, '')
+    const supabaseKey = (process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_SERVICE || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON || '').trim().replace(/\n/g, '')
 
     if (!supabaseUrl || !supabaseKey) {
       throw new Error('Missing Supabase environment variables')
