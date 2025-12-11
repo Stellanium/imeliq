@@ -9,7 +9,7 @@ export default function Home() {
           <h1 className="text-5xl font-bold mb-6">imeliq</h1>
           <p className="text-2xl mb-4">100% Looduslik Energiajook</p>
           <p className="text-lg opacity-90 mb-8">
-            Tervislik energia ilma kemikaalideta. Parem kui Brite Natural Drink.
+            Tervislik energia ilma kemikaalideta.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
