@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useTranslations } from 'next-intl';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter, useParams } from 'next/navigation';
 
 const languages = [
   { code: 'et', name: 'Eesti' },
@@ -49,6 +49,8 @@ function LanguageSwitcher() {
 
 export default function Home() {
   const t = useTranslations();
+  const params = useParams();
+  const locale = params.locale as string;
 
   return (
     <main className="min-h-screen">
@@ -63,13 +65,13 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="/register"
+              href={`/${locale}/register`}
               className="bg-white text-green-700 px-8 py-3 rounded-lg font-semibold hover:bg-green-50 transition"
             >
               {t('hero.register')}
             </Link>
             <Link
-              href="/feedback"
+              href={`/${locale}/feedback`}
               className="border-2 border-white px-8 py-3 rounded-lg font-semibold hover:bg-white/10 transition"
             >
               {t('hero.feedback')}
@@ -181,7 +183,7 @@ export default function Home() {
             {t('cta.description')}
           </p>
           <Link
-            href="/register"
+            href={`/${locale}/register`}
             className="inline-block bg-green-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-700 transition"
           >
             {t('hero.register')}
