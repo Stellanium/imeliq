@@ -35,7 +35,7 @@ function checkAuth(request: NextRequest): boolean {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { name, family_name, email, phone, marketing_consent } = body
+    const { name, family_name, email, phone, marketing_consent, locale } = body
 
     // Validate required fields
     if (!name || !email) {
@@ -55,7 +55,8 @@ export async function POST(request: NextRequest) {
         family_name: family_name || null,
         email,
         phone: phone || null,
-        marketing_consent: marketing_consent || false
+        marketing_consent: marketing_consent || false,
+        locale: locale || 'et'
       }])
       .select()
 

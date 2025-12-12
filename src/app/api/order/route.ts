@@ -20,7 +20,7 @@ function getSupabase(): SupabaseClient {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { email, quantity, price_per_unit, pickup_location } = body
+    const { email, quantity, price_per_unit, pickup_location, locale } = body
 
     // Validate required fields
     if (!email || !pickup_location) {
@@ -64,7 +64,8 @@ export async function POST(request: NextRequest) {
         quantity: qty,
         price_per_unit: price_per_unit || 1,
         pickup_location,
-        status: 'pending'
+        status: 'pending',
+        locale: locale || 'et'
       }])
       .select()
 

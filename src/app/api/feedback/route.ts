@@ -20,7 +20,7 @@ function getSupabase(): SupabaseClient {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { product_code, referrer_name, feeling, comments } = body
+    const { product_code, referrer_name, feeling, comments, locale } = body
 
     // Validate required fields
     if (!product_code || !referrer_name || !feeling) {
@@ -59,7 +59,8 @@ export async function POST(request: NextRequest) {
         product_code,
         referrer_name,
         feeling,
-        comments: comments || null
+        comments: comments || null,
+        locale: locale || 'et'
       }])
       .select()
 
