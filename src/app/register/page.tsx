@@ -1,9 +1,17 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 
+function detectLocale(): string {
+  if (typeof window === 'undefined') return 'et';
+  const lang = navigator.language?.split('-')[0] || 'et';
+  const supported = ['et', 'en', 'es', 'sv', 'fi'];
+  return supported.includes(lang) ? lang : 'et';
+}
+
 export default function RegisterPage() {
+  const [locale, setLocale] = useState('et');
   const [form, setForm] = useState({
     name: '',
     family_name: '',
@@ -11,6 +19,10 @@ export default function RegisterPage() {
     phone: '',
     marketing_consent: false
   })
+
+  useEffect(() => {
+    setLocale(detectLocale());
+  }, []);
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState('')
@@ -38,7 +50,8 @@ export default function RegisterPage() {
           family_name: form.family_name || null,
           email: form.email,
           phone: form.phone || null,
-          marketing_consent: form.marketing_consent
+          marketing_consent: form.marketing_consent,
+          locale: locale
         })
       })
 

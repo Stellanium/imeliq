@@ -1,7 +1,14 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
+
+function detectLocale(): string {
+  if (typeof window === 'undefined') return 'et';
+  const lang = navigator.language?.split('-')[0] || 'et';
+  const supported = ['et', 'en', 'es', 'sv', 'fi'];
+  return supported.includes(lang) ? lang : 'et';
+}
 
 const PICKUP_LOCATIONS = {
   courier: 'Kuller (kohaletoimetamine)',
@@ -12,6 +19,7 @@ const PICKUP_LOCATIONS = {
 }
 
 export default function OrderPage() {
+  const [locale, setLocale] = useState('et');
   const [form, setForm] = useState({
     email: '',
     quantity: 1,
@@ -21,6 +29,10 @@ export default function OrderPage() {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState('')
+
+  useEffect(() => {
+    setLocale(detectLocale());
+  }, []);
 
   const pricePerUnit = form.gave_data ? 1 : 2
   const totalPrice = form.quantity * pricePerUnit
@@ -46,7 +58,8 @@ export default function OrderPage() {
           email: form.email,
           quantity: form.quantity,
           price_per_unit: pricePerUnit,
-          pickup_location: form.pickup_location
+          pickup_location: form.pickup_location,
+          locale: locale
         })
       })
 
