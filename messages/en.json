@@ -1,0 +1,51 @@
+{
+  "hero": {
+    "title": "imeliq",
+    "subtitle": "100% Natural Energy Drink",
+    "description": "Healthy energy without chemicals.",
+    "register": "Register as a tester",
+    "feedback": "Give feedback"
+  },
+  "features": {
+    "title": "Why imeliq?",
+    "natural": {
+      "title": "100% Natural",
+      "description": "No chemicals. Only natural ingredients."
+    },
+    "energy": {
+      "title": "Healthy Energy",
+      "description": "Natural energy boost without side effects."
+    },
+    "tested": {
+      "title": "Tested and Approved",
+      "description": "Positive feedback from testers speaks for itself."
+    }
+  },
+  "howto": {
+    "title": "How to try?",
+    "step1": {
+      "title": "Register as a tester",
+      "description": "Enter your details and get a chance to try the drink."
+    },
+    "step2": {
+      "title": "Try the drink",
+      "description": "Drink exactly 150ml when you are tired and need energy."
+    },
+    "step3": {
+      "title": "Give feedback",
+      "description": "Fill out a short survey and share your experience with us."
+    },
+    "step4": {
+      "title": "Order more",
+      "description": "If you liked it, you can order more starting from €1/pc!"
+    }
+  },
+  "cta": {
+    "title": "Ready to try?",
+    "description": "Join our community of testers and discover natural energy."
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "contact": "Contact"
+  }
+}

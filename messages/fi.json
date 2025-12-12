@@ -1,0 +1,51 @@
+{
+  "hero": {
+    "title": "imeliq",
+    "subtitle": "100% Luonnollinen Energiajuoma",
+    "description": "Terveellistä energiaa ilman kemikaaleja.",
+    "register": "Rekisteröidy testaajaksi",
+    "feedback": "Anna palautetta"
+  },
+  "features": {
+    "title": "Miksi imeliq?",
+    "natural": {
+      "title": "100% Luonnollinen",
+      "description": "Ei kemikaaleja. Vain luonnollisia ainesosia."
+    },
+    "energy": {
+      "title": "Terveellinen Energia",
+      "description": "Luonnollinen energiapiristys ilman sivuvaikutuksia."
+    },
+    "tested": {
+      "title": "Testattu ja Hyväksytty",
+      "description": "Testaajien positiivinen palaute puhuu puolestaan."
+    }
+  },
+  "howto": {
+    "title": "Miten kokeilla?",
+    "step1": {
+      "title": "Rekisteröidy testaajaksi",
+      "description": "Syötä tietosi ja saat mahdollisuuden kokeilla juomaa."
+    },
+    "step2": {
+      "title": "Kokeile juomaa",
+      "description": "Juo tasan 150ml kun olet väsynyt ja tarvitset energiaa."
+    },
+    "step3": {
+      "title": "Anna palautetta",
+      "description": "Täytä lyhyt kysely ja jaa kokemuksesi kanssamme."
+    },
+    "step4": {
+      "title": "Tilaa lisää",
+      "description": "Jos pidit, voit tilata lisää alkaen 1€/kpl!"
+    }
+  },
+  "cta": {
+    "title": "Valmis kokeilemaan?",
+    "description": "Liity testaajien yhteisöömme ja löydä luonnollinen energia."
+  },
+  "footer": {
+    "rights": "Kaikki oikeudet pidätetään.",
+    "contact": "Yhteystiedot"
+  }
+}

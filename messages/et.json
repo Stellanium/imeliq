@@ -1,0 +1,51 @@
+{
+  "hero": {
+    "title": "imeliq",
+    "subtitle": "100% Looduslik Energiajook",
+    "description": "Tervislik energia ilma kemikaalideta.",
+    "register": "Registreeru katsetajaks",
+    "feedback": "Anna tagasisidet"
+  },
+  "features": {
+    "title": "Miks imeliq?",
+    "natural": {
+      "title": "100% Looduslik",
+      "description": "Mitte ühtegi kemikaali. Ainult looduslikud koostisosad."
+    },
+    "energy": {
+      "title": "Tervislik Energia",
+      "description": "Loomulik energiatõus ilma kõrvalmõjudeta."
+    },
+    "tested": {
+      "title": "Testitud ja Heaks Kiidetud",
+      "description": "Katsetajate positiivne tagasiside räägib iseenda eest."
+    }
+  },
+  "howto": {
+    "title": "Kuidas proovida?",
+    "step1": {
+      "title": "Registreeru katsetajaks",
+      "description": "Sisesta oma andmed ja saad võimaluse jooki proovida."
+    },
+    "step2": {
+      "title": "Proovi jooki",
+      "description": "Joo täpselt 150ml siis kui oled väsinud ja vajad energiat."
+    },
+    "step3": {
+      "title": "Anna tagasisidet",
+      "description": "Täida lühike ankeet ja jaga oma kogemust meiega."
+    },
+    "step4": {
+      "title": "Telli veel",
+      "description": "Kui meeldis, saad tellida juurde alates 1€/tk!"
+    }
+  },
+  "cta": {
+    "title": "Valmis proovima?",
+    "description": "Liitu meie katsetajate kogukonnaga ja avasta looduslik energia."
+  },
+  "footer": {
+    "rights": "Kõik õigused kaitstud.",
+    "contact": "Kontakt"
+  }
+}

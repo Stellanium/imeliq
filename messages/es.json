@@ -1,0 +1,51 @@
+{
+  "hero": {
+    "title": "imeliq",
+    "subtitle": "Bebida Energética 100% Natural",
+    "description": "Energía saludable sin químicos.",
+    "register": "Regístrate como probador",
+    "feedback": "Dar opinión"
+  },
+  "features": {
+    "title": "¿Por qué imeliq?",
+    "natural": {
+      "title": "100% Natural",
+      "description": "Sin químicos. Solo ingredientes naturales."
+    },
+    "energy": {
+      "title": "Energía Saludable",
+      "description": "Impulso de energía natural sin efectos secundarios."
+    },
+    "tested": {
+      "title": "Probado y Aprobado",
+      "description": "Los comentarios positivos de los probadores hablan por sí solos."
+    }
+  },
+  "howto": {
+    "title": "¿Cómo probar?",
+    "step1": {
+      "title": "Regístrate como probador",
+      "description": "Ingresa tus datos y obtén la oportunidad de probar la bebida."
+    },
+    "step2": {
+      "title": "Prueba la bebida",
+      "description": "Bebe exactamente 150ml cuando estés cansado y necesites energía."
+    },
+    "step3": {
+      "title": "Da tu opinión",
+      "description": "Completa una breve encuesta y comparte tu experiencia con nosotros."
+    },
+    "step4": {
+      "title": "Pide más",
+      "description": "Si te gustó, puedes pedir más desde 1€/unidad!"
+    }
+  },
+  "cta": {
+    "title": "¿Listo para probar?",
+    "description": "Únete a nuestra comunidad de probadores y descubre la energía natural."
+  },
+  "footer": {
+    "rights": "Todos los derechos reservados.",
+    "contact": "Contacto"
+  }
+}
