@@ -1,0 +1,51 @@
+{
+  "hero": {
+    "title": "imeliq",
+    "subtitle": "100% Naturlig Energidryck",
+    "description": "Hälsosam energi utan kemikalier.",
+    "register": "Registrera dig som testare",
+    "feedback": "Ge feedback"
+  },
+  "features": {
+    "title": "Varför imeliq?",
+    "natural": {
+      "title": "100% Naturlig",
+      "description": "Inga kemikalier. Endast naturliga ingredienser."
+    },
+    "energy": {
+      "title": "Hälsosam Energi",
+      "description": "Naturlig energiboost utan bieffekter."
+    },
+    "tested": {
+      "title": "Testad och Godkänd",
+      "description": "Positiv feedback från testare talar för sig själv."
+    }
+  },
+  "howto": {
+    "title": "Hur provar man?",
+    "step1": {
+      "title": "Registrera dig som testare",
+      "description": "Ange dina uppgifter och få chansen att prova drycken."
+    },
+    "step2": {
+      "title": "Prova drycken",
+      "description": "Drick exakt 150ml när du är trött och behöver energi."
+    },
+    "step3": {
+      "title": "Ge feedback",
+      "description": "Fyll i en kort enkät och dela din upplevelse med oss."
+    },
+    "step4": {
+      "title": "Beställ mer",
+      "description": "Om du gillade det kan du beställa mer från 1€/st!"
+    }
+  },
+  "cta": {
+    "title": "Redo att prova?",
+    "description": "Gå med i vår community av testare och upptäck naturlig energi."
+  },
+  "footer": {
+    "rights": "Alla rättigheter förbehållna.",
+    "contact": "Kontakt"
+  }
+}

@@ -1,28 +1,78 @@
+'use client';
+
 import Link from 'next/link'
+import { useTranslations } from 'next-intl';
+import { usePathname, useRouter } from 'next/navigation';
+
+const languages = [
+  { code: 'et', name: 'Eesti' },
+  { code: 'en', name: 'English' },
+  { code: 'es', name: 'Español' },
+  { code: 'sv', name: 'Svenska' },
+  { code: 'fi', name: 'Suomi' },
+];
+
+function LanguageSwitcher() {
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const currentLocale = pathname.split('/')[1] || 'et';
+
+  const switchLanguage = (locale: string) => {
+    const segments = pathname.split('/');
+    if (languages.some(l => l.code === segments[1])) {
+      segments[1] = locale;
+    } else {
+      segments.splice(1, 0, locale);
+    }
+    router.push(segments.join('/') || '/');
+  };
+
+  return (
+    <div className="absolute top-4 right-4 flex gap-2">
+      {languages.map((lang) => (
+        <button
+          key={lang.code}
+          onClick={() => switchLanguage(lang.code)}
+          className={`px-3 py-1 rounded text-sm ${
+            currentLocale === lang.code
+              ? 'bg-white text-green-700 font-semibold'
+              : 'bg-green-700 text-white hover:bg-green-600'
+          }`}
+        >
+          {lang.code.toUpperCase()}
+        </button>
+      ))}
+    </div>
+  );
+}
 
 export default function Home() {
+  const t = useTranslations();
+
   return (
     <main className="min-h-screen">
       {/* Hero */}
       <section className="relative bg-gradient-to-br from-green-600 to-green-800 text-white py-20 px-4">
+        <LanguageSwitcher />
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl font-bold mb-6">imeliq</h1>
-          <p className="text-2xl mb-4">100% Looduslik Energiajook</p>
+          <h1 className="text-5xl font-bold mb-6">{t('hero.title')}</h1>
+          <p className="text-2xl mb-4">{t('hero.subtitle')}</p>
           <p className="text-lg opacity-90 mb-8">
-            Tervislik energia ilma kemikaalideta.
+            {t('hero.description')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/register"
               className="bg-white text-green-700 px-8 py-3 rounded-lg font-semibold hover:bg-green-50 transition"
             >
-              Registreeru katsetajaks
+              {t('hero.register')}
             </Link>
             <Link
               href="/feedback"
               className="border-2 border-white px-8 py-3 rounded-lg font-semibold hover:bg-white/10 transition"
             >
-              Anna tagasisidet
+              {t('hero.feedback')}
             </Link>
           </div>
         </div>
@@ -32,34 +82,34 @@ export default function Home() {
       <section className="py-16 px-4">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
-            Miks imeliq?
+            {t('features.title')}
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center p-6 bg-white rounded-xl shadow-sm">
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-3xl">🌿</span>
               </div>
-              <h3 className="text-xl font-semibold mb-2">100% Looduslik</h3>
+              <h3 className="text-xl font-semibold mb-2">{t('features.natural.title')}</h3>
               <p className="text-gray-600">
-                Mitte ühtegi kemikaali. Ainult looduslikud koostisosad.
+                {t('features.natural.description')}
               </p>
             </div>
             <div className="text-center p-6 bg-white rounded-xl shadow-sm">
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-3xl">⚡</span>
               </div>
-              <h3 className="text-xl font-semibold mb-2">Tervislik Energia</h3>
+              <h3 className="text-xl font-semibold mb-2">{t('features.energy.title')}</h3>
               <p className="text-gray-600">
-                Loomulik energiatõus ilma kõrvalmõjudeta.
+                {t('features.energy.description')}
               </p>
             </div>
             <div className="text-center p-6 bg-white rounded-xl shadow-sm">
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-3xl">🎯</span>
               </div>
-              <h3 className="text-xl font-semibold mb-2">Testitud ja Heaks Kiidetud</h3>
+              <h3 className="text-xl font-semibold mb-2">{t('features.tested.title')}</h3>
               <p className="text-gray-600">
-                Katsetajate positiivne tagasiside räägib iseenda eest.
+                {t('features.tested.description')}
               </p>
             </div>
           </div>
@@ -70,7 +120,7 @@ export default function Home() {
       <section className="py-16 px-4 bg-green-50">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
-            Kuidas proovida?
+            {t('howto.title')}
           </h2>
           <div className="space-y-8">
             <div className="flex items-start gap-4">
@@ -78,9 +128,9 @@ export default function Home() {
                 1
               </div>
               <div>
-                <h3 className="text-xl font-semibold mb-1">Registreeru katsetajaks</h3>
+                <h3 className="text-xl font-semibold mb-1">{t('howto.step1.title')}</h3>
                 <p className="text-gray-600">
-                  Sisesta oma andmed ja saad võimaluse jooki proovida.
+                  {t('howto.step1.description')}
                 </p>
               </div>
             </div>
@@ -89,9 +139,9 @@ export default function Home() {
                 2
               </div>
               <div>
-                <h3 className="text-xl font-semibold mb-1">Proovi jooki</h3>
+                <h3 className="text-xl font-semibold mb-1">{t('howto.step2.title')}</h3>
                 <p className="text-gray-600">
-                  Joo <strong>täpselt 150ml</strong> siis kui oled väsinud ja vajad energiat.
+                  {t('howto.step2.description')}
                 </p>
               </div>
             </div>
@@ -100,9 +150,9 @@ export default function Home() {
                 3
               </div>
               <div>
-                <h3 className="text-xl font-semibold mb-1">Anna tagasisidet</h3>
+                <h3 className="text-xl font-semibold mb-1">{t('howto.step3.title')}</h3>
                 <p className="text-gray-600">
-                  Täida lühike ankeet ja jaga oma kogemust meiega.
+                  {t('howto.step3.description')}
                 </p>
               </div>
             </div>
@@ -111,9 +161,9 @@ export default function Home() {
                 4
               </div>
               <div>
-                <h3 className="text-xl font-semibold mb-1">Telli veel</h3>
+                <h3 className="text-xl font-semibold mb-1">{t('howto.step4.title')}</h3>
                 <p className="text-gray-600">
-                  Kui meeldis, saad tellida juurde <strong>alates 1€/tk</strong>!
+                  {t('howto.step4.description')}
                 </p>
               </div>
             </div>
@@ -125,16 +175,16 @@ export default function Home() {
       <section className="py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-4 text-gray-800">
-            Valmis proovima?
+            {t('cta.title')}
           </h2>
           <p className="text-gray-600 mb-8">
-            Liitu meie katsetajate kogukonnaga ja avasta looduslik energia.
+            {t('cta.description')}
           </p>
           <Link
             href="/register"
             className="inline-block bg-green-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-700 transition"
           >
-            Registreeru katsetajaks
+            {t('hero.register')}
           </Link>
         </div>
       </section>
@@ -143,10 +193,10 @@ export default function Home() {
       <footer className="bg-gray-800 text-white py-8 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-gray-400">
-            &copy; {new Date().getFullYear()} imeliq. Kõik õigused kaitstud.
+            &copy; {new Date().getFullYear()} imeliq. {t('footer.rights')}
           </p>
           <p className="text-gray-500 text-sm mt-2">
-            Kontakt: martin@kunnap.ee | +372 508 9040
+            {t('footer.contact')}: martin@kunnap.ee | +372 508 9040
           </p>
         </div>
       </footer>
