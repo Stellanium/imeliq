@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS testers (
   email VARCHAR(255) NOT NULL UNIQUE,
   phone VARCHAR(50),
   marketing_consent BOOLEAN DEFAULT false,
+  locale VARCHAR(5) DEFAULT 'et',
   created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
 
@@ -20,6 +21,7 @@ CREATE TABLE IF NOT EXISTS feedback (
   referrer_name VARCHAR(100) NOT NULL,
   feeling VARCHAR(20) NOT NULL CHECK (feeling IN ('nothing', 'energy', 'other')),
   comments TEXT,
+  locale VARCHAR(5) DEFAULT 'et',
   created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
 
@@ -32,6 +34,7 @@ CREATE TABLE IF NOT EXISTS orders (
   price_per_unit DECIMAL(10,2) NOT NULL,
   pickup_location VARCHAR(20) NOT NULL CHECK (pickup_location IN ('courier', 'tallinn', 'parnu', 'tartu', 'vantaa')),
   status VARCHAR(20) DEFAULT 'pending' CHECK (status IN ('pending', 'confirmed', 'delivered')),
+  locale VARCHAR(5) DEFAULT 'et',
   created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
 
