@@ -1,9 +1,17 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 
+function detectLocale(): string {
+  if (typeof window === 'undefined') return 'et';
+  const lang = navigator.language?.split('-')[0] || 'et';
+  const supported = ['et', 'en', 'es', 'sv', 'fi'];
+  return supported.includes(lang) ? lang : 'et';
+}
+
 export default function FeedbackPage() {
+  const [locale, setLocale] = useState('et');
   const [form, setForm] = useState({
     product_code: '',
     referrer_name: '',
@@ -13,6 +21,10 @@ export default function FeedbackPage() {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState('')
+
+  useEffect(() => {
+    setLocale(detectLocale());
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -35,7 +47,8 @@ export default function FeedbackPage() {
           product_code: form.product_code,
           referrer_name: form.referrer_name,
           feeling: form.feeling,
-          comments: form.comments || null
+          comments: form.comments || null,
+          locale: locale
         })
       })
 
