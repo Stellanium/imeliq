@@ -29,7 +29,7 @@ function LanguageSwitcher() {
   };
 
   return (
-    <div className="absolute top-4 right-4 flex gap-2">
+    <div className="absolute top-4 right-4 flex gap-2 z-20">
       {languages.map((lang) => (
         <button
           key={lang.code}
@@ -55,9 +55,14 @@ export default function Home() {
   return (
     <main className="min-h-screen">
       {/* Hero */}
-      <section className="relative bg-gradient-to-br from-green-600 to-green-800 text-white py-20 px-4">
+      <section
+        className="relative text-white py-20 px-4 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: 'url(/matcha-field.jpg)' }}
+      >
+        {/* Dark overlay for text readability */}
+        <div className="absolute inset-0 bg-black/40"></div>
         <LanguageSwitcher />
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="relative z-10 max-w-4xl mx-auto text-center">
           <h1 className="text-5xl font-bold mb-6">{t('hero.title')}</h1>
           <p className="text-2xl mb-4">{t('hero.subtitle')}</p>
           <p className="text-lg opacity-90 mb-8">
