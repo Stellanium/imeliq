@@ -8,6 +8,9 @@
   },
   "features": {
     "title": "Miksi imeliq?",
+    "vitality": "LUONNOLLINEN ELINVOIMA",
+    "focus": "KESKITTYMINEN",
+    "repair": "PALAUTUMINEN",
     "natural": {
       "title": "100% Luonnollinen",
       "description": "Ei kemikaaleja. Vain luonnollisia ainesosia."

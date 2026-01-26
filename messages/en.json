@@ -1,24 +1,27 @@
 {
   "hero": {
     "title": "imeliq",
-    "subtitle": "100% Natural Energy Drink",
-    "description": "Healthy energy without chemicals.",
+    "subtitle": "Healing Energy Drink",
+    "description": "Natural vitality for body and mind. No chemicals, only pure energy.",
     "register": "Register as a tester",
     "feedback": "Give feedback"
   },
   "features": {
-    "title": "Why imeliq?",
+    "title": "Why IMELIQ?",
+    "vitality": "NATURAL VITALITY",
+    "focus": "FOCUS",
+    "repair": "REPAIR",
     "natural": {
-      "title": "100% Natural",
-      "description": "No chemicals. Only natural ingredients."
+      "title": "Natural Vitality",
+      "description": "100% natural ingredients that give you energy without side effects."
     },
     "energy": {
-      "title": "Healthy Energy",
-      "description": "Natural energy boost without side effects."
+      "title": "Laser Focus",
+      "description": "Sharpen your mind and stay concentrated throughout the day."
     },
     "tested": {
-      "title": "Tested and Approved",
-      "description": "Positive feedback from testers speaks for itself."
+      "title": "Body Repair",
+      "description": "Support your body's natural healing and recovery processes."
     }
   },
   "howto": {
