@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation'
 
 export default function FeedbackRedirect() {
-  redirect('/et/feedback')
+  redirect('/en/feedback')
 }

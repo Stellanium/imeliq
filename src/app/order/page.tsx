@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation'
 
 export default function OrderRedirect() {
-  redirect('/et/order')
+  redirect('/en/order')
 }
