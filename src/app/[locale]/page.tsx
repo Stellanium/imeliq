@@ -16,7 +16,7 @@ function LanguageSwitcher() {
   const pathname = usePathname();
   const router = useRouter();
 
-  const currentLocale = pathname.split('/')[1] || 'et';
+  const currentLocale = pathname.split('/')[1] || 'en';
 
   const switchLanguage = (locale: string) => {
     const segments = pathname.split('/');
